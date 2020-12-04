@@ -2,9 +2,25 @@
 
 use Illuminate\Support\Str;
 
-$url = parse_url(getenv("mysql://ba3d9da89c3ea3:20a773cc@us-cdbr-east-02.cleardb.com/heroku_ee7762f1970ac68?reconnect=true"));
+$url = parse_url(getenv("mysql://b69d757da28e74:e66ee5e9@us-cdbr-east-02.cleardb.com/heroku_08833f4b66195e3?reconnect=true"));
+
+$host = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$database = substr($url["path"], 1);
 
 return [
+
+    'your_heroku_mysql_connection' => array(
+        'driver' => 'mysql',
+        'host' => $host,
+        'database' => $database,
+        'username' => $username,
+        'password' => $password,
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix' => '',
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -17,7 +33,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'your_heroku_mysql_connection'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,8 +50,6 @@ return [
     | choice installed on your machine before you begin development.
     |
     */
-
-    'default' => env('DB_CONNECTION', 'mysql'),
 
     'connections' => [
 
