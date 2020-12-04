@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 
-$url = parse_url(getenv("mysql://b69d757da28e74:e66ee5e9@us-cdbr-east-02.cleardb.com/heroku_08833f4b66195e3?reconnect=true"));
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
 
 $host = $url["host"];
 $username = $url["user"];
@@ -42,17 +42,6 @@ return [
 
     'connections' => [
 
-        'your_heroku_mysql_connection' => array(
-            'driver' => 'mysql',
-            'host' => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-        ),
-
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
@@ -64,14 +53,14 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => $host,
             'port' => env('DB_PORT', '3306'),
-            'database' => substr($url["path"], 1),
-            'username' => $url["user"],
-            'password' => $url["pass"],
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
