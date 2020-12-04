@@ -419,8 +419,6 @@
               <div class="display-flex">
                 <a href="{{ route('condominium.create')}}">Add New Units</a>
                 <a href="{{ route('condominium.index')}}">View All Units</a>
-                <a href="{{ route('visitor.create')}}">Add New Visitor</a>
-                <a href="{{ route('visitor.index')}}">View All Visitor</a>
               </div>
             </div>
           </div>
