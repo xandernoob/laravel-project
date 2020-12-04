@@ -52,22 +52,29 @@ class CondominiumController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'owner' => 'required',
-            'unit' => 'required',
-            'contact' => 'required'
-        ]);
-
-        $input = $request->all();
-
-        if (Condominium::create($input)) {
-            $request->session()->flash('success', "Unit successfully added!");
-        } else {
-            $request->session()->flash('warning', "Something went wrong, please try again later!");
-
+        $check_unit = Condominium::where('unit', '=', $request->get('unit'))->exists();
+        if ( $check_unit) {
+            $request->session()->flash('danger', "Unit already registered");
+            return redirect()->route('condominium.create');
+        }else {
+            $request->validate([
+                'owner' => 'required',
+                'unit' => 'required',
+                'contact' => 'required'
+            ]);
+    
+            $input = $request->all();
+    
+            if (Condominium::create($input)) {
+                $request->session()->flash('success', "Unit successfully added!");
+            } else {
+                $request->session()->flash('warning', "Something went wrong, please try again later!");
+    
+            }
+            
+            return redirect()->route('condominium.index');
         }
         
-        return redirect()->route('condominium.index');
     }
 
     /**
@@ -109,21 +116,29 @@ class CondominiumController extends Controller
     {
         $unit = Condominium::findOrFail($id);
 
-        $this->validate($request,[
-            'owner' => 'required',
-            'unit' => 'required',
-            'contact' => 'required'
-        ]);
-
-        $input = $request->all();
-
-        if ($unit->fill($input)->save()){
-            $request->session()->flash('success', "Unit successfully eddited!");
+        $check_unit = Condominium::where('id', "!=", $id)->where('unit', '=', $request->get('unit'))->exists();
+        if ( $check_unit) {
+            $request->session()->flash('danger', "Unit already registered");
+            return redirect()->route('condominium.edit', $id);
         }else {
-            $request->session()->flash('warning', "Something went wrong, please try again later!");
-        };
+            $this->validate($request,[
+                'owner' => 'required',
+                'unit' => 'required',
+                'contact' => 'required'
+            ]);
+    
+            $input = $request->all();
+    
+            if ($unit->fill($input)->save()){
+                $request->session()->flash('success', "Unit successfully eddited!");
+            }else {
+                $request->session()->flash('warning', "Something went wrong, please try again later!");
+            };
+    
+            return redirect()->route('condominium.index');
+        }
 
-        return redirect()->route('condominium.index');
+        
     }
 
     /**

@@ -133,11 +133,19 @@ class VisitorController extends Controller
 
         $visitor_list = Visitor::select('unit')->where('unit', "=", $request->get('unit'))->get();
         $count_visitor = $visitor_list->count();
+        $check_contact = Visitor::where('id', "!=", $id)->where('contact', '=', $request->get('contact'))->exists();
+        $check_nric = Visitor::where('id', "!=", $id)->where('nric', '=', $request->get('nric'))->exists();
+
         $visitor = Visitor::findOrFail($id);
 
-        if ($count_visitor >= 5) {
+        if ($check_contact && $check_nric) {
+            $request->session()->flash('danger', "Visitor already registered");
+
+            return redirect()->route('visitor.edit', $id);
+        } elseif($count_visitor >= 5) {
             $request->session()->flash('danger', "The unit already have five visitor");
-            return redirect()->route('visitor.create');
+            
+            return redirect()->route('visitor.edit', $id);
         } else {
             $request->validate([
                 'name' => 'required',
@@ -188,7 +196,7 @@ class VisitorController extends Controller
         $visitor = Visitor::findOrFail($id);
         
         if($visitor->delete()) {
-            $request->session()->flash('success', "Visitor has left the premise!");
+            $request->session()->flash('success', "Visitor has left the premise deleted!");
         }else {
             $request->session()->flash('warning', "Something went wrong, please try again later!");
         };

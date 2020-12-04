@@ -1,6 +1,13 @@
 @extends('layouts.mainlayout')
 @section('content')
     <div class="container mt-5">
+        @foreach (['danger', 'warning', 'success', 'info'] as $key)
+            @if (Session::has($key))
+                <div class="alert alert-{{ $key }}">
+                    {{ Session::get($key) }}
+                </div>
+            @endif
+        @endforeach
         <div class="row">
             <div class="col-6 offset-3">
                 <h2 class="text-center">Please enter your details:</h1>
