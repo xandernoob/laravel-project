@@ -1,0 +1,41 @@
+body {
+    position: relative;
+    min-height: 100vh;
+}
+
+.custom-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-footer p {
+    margin: 0;
+}
+
+#condos .error {
+    color: red;
+    margin-left: 5px;
+}
+
+#condos label.error{
+    display: inline;
+}
+
+#visitor .error {
+    color: red;
+    margin-left: 5px;
+}
+
+#visitor label.error{
+    display: inline;
+}
+
+.search-container {
+    max-width: 400px;
+    margin-left: auto;
+}
