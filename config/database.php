@@ -11,17 +11,6 @@ $database = substr($url["path"], 1);
 
 return [
 
-    'your_heroku_mysql_connection' => array(
-        'driver' => 'mysql',
-        'host' => $host,
-        'database' => $database,
-        'username' => $username,
-        'password' => $password,
-        'charset' => 'utf8',
-        'collation' => 'utf8_unicode_ci',
-        'prefix' => '',
-    ),
-
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -52,6 +41,17 @@ return [
     */
 
     'connections' => [
+
+        'your_heroku_mysql_connection' => array(
+            'driver' => 'mysql',
+            'host' => $host,
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ),
 
         'sqlite' => [
             'driver' => 'sqlite',
